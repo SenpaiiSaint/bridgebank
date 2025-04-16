@@ -1,4 +1,4 @@
-import SMSUSSDSimulator from "@/components/SMSUSSDSimulator";
+import SMSUSSDSimulator from "../components/SMSUSSDSimulator";
 
 export default function USSDPage() {
   return (

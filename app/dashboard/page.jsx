@@ -1,4 +1,4 @@
-import NGODashboard from "@/components/NGODashboard";
+import NGODashboard from "../components/NGODashboard";
 
 export default function DashboardPage() {
   return (
