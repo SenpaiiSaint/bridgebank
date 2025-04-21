@@ -14,10 +14,7 @@ export async function GET() {
 
   const transactions = await prisma.transaction.findMany({
     where: {
-      OR: [
-        { senderId: session.user.id },
-        { receiverId: session.user.id },
-      ],
+      userId: session.user.id,
     },
     orderBy: {
       createdAt: 'desc',
@@ -33,53 +30,50 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const { amount, receiverId } = await request.json();
+  const { amount, type, description } = await request.json();
 
-  if (!amount || !receiverId) {
+  if (!amount || !type || !description) {
     return NextResponse.json(
-      { error: 'Amount and receiver ID are required' },
+      { error: 'Amount, type, and description are required' },
       { status: 400 }
     );
   }
 
-  const sender = await prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: { id: session.user.id },
   });
 
-  if (!sender || sender.balance < amount) {
+  if (!user) {
+    return NextResponse.json(
+      { error: 'User not found' },
+      { status: 404 }
+    );
+  }
+
+  if (type === 'DEBIT' && user.balance < amount) {
     return NextResponse.json(
       { error: 'Insufficient balance' },
       { status: 400 }
     );
   }
 
-  const receiver = await prisma.user.findUnique({
-    where: { id: receiverId },
-  });
-
-  if (!receiver) {
-    return NextResponse.json(
-      { error: 'Receiver not found' },
-      { status: 404 }
-    );
-  }
-
   const transaction = await prisma.transaction.create({
     data: {
       amount,
-      senderId: session.user.id,
-      receiverId,
+      type,
+      description,
+      userId: session.user.id,
     },
   });
 
+  // Update user balance
   await prisma.user.update({
     where: { id: session.user.id },
-    data: { balance: { decrement: amount } },
-  });
-
-  await prisma.user.update({
-    where: { id: receiverId },
-    data: { balance: { increment: amount } },
+    data: {
+      balance: {
+        [type === 'CREDIT' ? 'increment' : 'decrement']: amount,
+      },
+    },
   });
 
   return NextResponse.json(transaction);
