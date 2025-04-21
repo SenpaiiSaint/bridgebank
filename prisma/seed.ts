@@ -1,50 +1,47 @@
-import { PrismaClient, Prisma } from '../generated/prisma';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-const userData: Prisma.UserCreateInput[] = [
+const userData = [
   {
     name: "Saint",
+    email: "saint@example.com",
+    password: "hashedpassword123", // In production, this should be properly hashed
     phone: "1112223333",
-    account: {
-      create: {
-        balance: 10000000.0,
-        transactions: {
-          create: [
-            {
-              amount: 5000000.0,
-              type: "credit",
-              description: "Initial deposit",
-            },
-            { amount: 300000.0, type: "debit", description: "Porsche USA" },
-          ],
+    role: "USER",
+    transactions: {
+      create: [
+        {
+          amount: 5000000.0,
+          type: "CREDIT",
+          status: "COMPLETED",
+          description: "Initial deposit",
         },
-        loans: {
-          create: [
-            { amount: 100000.0, interest: 5.0, term: 12, status: "approved" },
-          ],
+        { 
+          amount: 300000.0, 
+          type: "DEBIT", 
+          status: "COMPLETED",
+          description: "Porsche USA" 
         },
-      },
-    },
+      ],
+    }
   },
   {
     name: "Bob",
+    email: "bob@example.com",
+    password: "hashedpassword456", // In production, this should be properly hashed
     phone: "4445556666",
-    account: {
-      create: {
-        balance: 300.0,
-        transactions: {
-          create: [
-            { amount: 300.0, type: "credit", description: "Salary deposit" },
-          ],
+    role: "USER",
+    transactions: {
+      create: [
+        { 
+          amount: 300.0, 
+          type: "CREDIT", 
+          status: "COMPLETED",
+          description: "Salary deposit" 
         },
-        loans: {
-          create: [
-            { amount: 100.0, interest: 3.0, term: 6, status: "pending" },
-          ],
-        },
-      },
-    },
+      ],
+    }
   },
 ];
 
