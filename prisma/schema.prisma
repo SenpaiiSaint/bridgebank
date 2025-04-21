@@ -13,6 +13,7 @@ model User {
   email         String    @unique
   phone         String    @unique
   password      String
+  balance       Float     @default(0)
   role          Role      @default(USER)
   transactions  Transaction[]
   accounts      Account[]
