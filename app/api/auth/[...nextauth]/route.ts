@@ -4,6 +4,6 @@ import { authOptions } from "@/lib/auth";
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-// Use individual handlers instead of reusing the handler
-export const GET = NextAuth(authOptions);
-export const POST = NextAuth(authOptions); 
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST, handler as PUT, handler as DELETE }; 
