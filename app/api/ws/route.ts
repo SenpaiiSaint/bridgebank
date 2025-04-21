@@ -1,64 +1,42 @@
-import { Server } from 'socket.io';
-import { NextRequest } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
+import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 
-let io: Server;
-
-export async function GET(req: NextRequest) {
-  if (!io) {
-    const httpServer = new (require('http').Server)();
-    io = new Server(httpServer, {
-      cors: {
-        origin: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
-        methods: ['GET', 'POST'],
-      },
-    });
-
-    io.on('connection', async (socket) => {
-      const session = await getServerSession(authOptions);
-      if (!session?.user?.id) {
-        socket.disconnect();
-        return;
-      }
-
-      // Join user's room
-      socket.join(session.user.id);
-
-      // Handle new transactions
-      socket.on('newTransaction', async (data) => {
-        try {
-          const transaction = await prisma.transaction.create({
-            data: {
-              ...data,
-              userId: session.user.id,
-            },
-          });
-
-          // Broadcast to user's room
-          io.to(session.user.id).emit('transaction', transaction);
-        } catch (error) {
-          console.error('Error creating transaction:', error);
-        }
-      });
-
-      // Handle disconnection
-      socket.on('disconnect', () => {
-        console.log('Client disconnected');
-      });
-    });
-
-    httpServer.listen(3001);
+export async function GET(request: Request) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  return new Response(null, {
-    status: 101,
-    headers: {
-      'Upgrade': 'websocket',
-      'Connection': 'Upgrade',
+  const { searchParams } = new URL(request.url);
+  const userId = searchParams.get("userId");
+
+  if (!userId) {
+    return NextResponse.json(
+      { error: "User ID is required" },
+      { status: 400 }
+    );
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      balance: true,
     },
   });
+
+  if (!user) {
+    return NextResponse.json(
+      { error: "User not found" },
+      { status: 404 }
+    );
+  }
+
+  return NextResponse.json(user);
 }
 
 export const runtime = 'nodejs';
