@@ -24,7 +24,8 @@ interface Loan {
 interface Account {
   id: string;
   balance: number;
-  type: string;
+  type: 'savings' | 'current';
+  lastUpdated: string;
 }
 
 export default function NGODashboard() {
@@ -55,7 +56,8 @@ export default function NGODashboard() {
     {
       id: '1',
       balance: 10000,
-      type: 'Main Account',
+      type: 'savings',
+      lastUpdated: '2024-04-21',
     },
     // Add more accounts as needed
   ];

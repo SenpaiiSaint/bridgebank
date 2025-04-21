@@ -9,9 +9,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'FinLink - Bridging Financial Gaps',
-  description: 'Empowering underserved communities with accessible financial services through innovative technology and partnerships.',
-  keywords: 'financial inclusion, mobile banking, USSD banking, NGO finance, digital payments, microfinance',
+  title: 'FinLink - Financial Inclusion Platform',
+  description: 'Transforming financial access through innovative technology solutions, empowering NGOs and underserved communities with secure, efficient, and accessible financial services.',
+  keywords: 'financial inclusion, digital banking, USSD banking, NGO financial management, secure payments, microfinance solutions, financial empowerment',
 };
 
 interface RootLayoutProps {

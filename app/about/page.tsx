@@ -19,7 +19,7 @@ export default function About() {
                 About FinLink
               </h1>
               <p className="mt-4 text-xl text-gray-600">
-                Bridging financial gaps through innovative technology
+                Pioneering financial inclusion through innovative technology solutions
               </p>
             </div>
 
@@ -32,8 +32,8 @@ export default function About() {
               >
                 <h2 className="text-2xl font-semibold mb-4">Our Mission</h2>
                 <p className="text-gray-600">
-                  FinLink is dedicated to empowering NGOs and underserved communities with accessible financial services. 
-                  We believe that everyone deserves access to secure and efficient financial tools, regardless of their location or circumstances.
+                  FinLink is committed to revolutionizing financial access by providing secure, efficient, and inclusive financial solutions. 
+                  We empower NGOs and underserved communities with the tools and resources needed to achieve financial independence and sustainable growth.
                 </p>
               </motion.div>
 
@@ -45,8 +45,8 @@ export default function About() {
               >
                 <h2 className="text-2xl font-semibold mb-4">Our Vision</h2>
                 <p className="text-gray-600">
-                  We envision a world where financial services are accessible to all, enabling communities to thrive and 
-                  organizations to make a greater impact. Through our innovative platform, we're making this vision a reality.
+                  We envision a future where financial services are universally accessible, enabling communities to thrive and organizations to maximize their impact. 
+                  Through our innovative platform and strategic partnerships, we're building a more inclusive financial ecosystem.
                 </p>
               </motion.div>
             </div>
@@ -57,15 +57,15 @@ export default function About() {
               transition={{ delay: 0.6 }}
               className="bg-white rounded-2xl shadow-lg p-6"
             >
-              <h2 className="text-2xl font-semibold mb-4">Key Features</h2>
+              <h2 className="text-2xl font-semibold mb-4">Core Capabilities</h2>
               <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {[
-                  'NGO Financial Management',
-                  'USSD Banking Services',
+                  'Advanced Financial Management',
+                  'Universal Banking Access',
                   'Real-time Transaction Monitoring',
-                  'Secure Payment Processing',
+                  'Secure Payment Infrastructure',
                   'Multi-language Support',
-                  'Comprehensive Reporting'
+                  'Comprehensive Analytics'
                 ].map((feature, index) => (
                   <li key={feature} className="flex items-center text-gray-600">
                     <span className="mr-2 text-blue-600">✓</span>

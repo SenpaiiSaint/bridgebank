@@ -67,12 +67,21 @@ export default function PageNav() {
                 left: indicatorStyles.left,
                 height: indicatorStyles.height,
               }}
-              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              transition={{
+                type: "spring",
+                stiffness: 200,
+                damping: 20,
+                mass: 0.5,
+                restDelta: 0.001,
+                restSpeed: 0.001
+              }}
             />
             {navItems.map((item, index) => (
               <div
                 key={item.path}
-                ref={el => navRefs.current[index] = el}
+                ref={(el: HTMLDivElement | null) => {
+                  if (el) navRefs.current[index] = el;
+                }}
                 className="relative px-2"
               >
                 <Link

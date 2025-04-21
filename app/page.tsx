@@ -74,7 +74,7 @@ export default function Home() {
                     transition={{ duration: 0.8, delay: 0.4 }}
                     className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600"
                   >
-                    Bridging Financial Gaps
+                    Financial Inclusion for All
                   </motion.h1>
                   <motion.p 
                     initial={{ opacity: 0, y: 20 }}
@@ -82,7 +82,7 @@ export default function Home() {
                     transition={{ duration: 0.8, delay: 0.6 }}
                     className="text-xl md:text-2xl mb-8 text-gray-600"
                   >
-                    Empowering NGOs and underserved communities with accessible financial services through innovative technology.
+                    Empowering NGOs and underserved communities with secure, efficient, and accessible financial solutions through cutting-edge technology.
                   </motion.p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Link
@@ -118,17 +118,17 @@ export default function Home() {
                   {[
                     {
                       title: "NGO Financial Management",
-                      description: "Comprehensive dashboard for tracking donations, expenses, and project funding in real-time.",
+                      description: "Advanced financial management platform for tracking donations, expenses, and project funding with real-time analytics and reporting.",
                       icon: "📊"
                     },
                     {
                       title: "USSD Banking",
-                      description: "Accessible banking services through simple USSD codes, reaching communities without internet access.",
+                      description: "Universal banking access through USSD technology, enabling financial services for communities with limited internet connectivity.",
                       icon: "📱"
                     },
                     {
-                      title: "Financial Inclusion",
-                      description: "Empowering underserved communities with essential financial services and education.",
+                      title: "Financial Empowerment",
+                      description: "Comprehensive financial solutions and education programs designed to uplift underserved communities and drive sustainable growth.",
                       icon: "🌍"
                     }
                   ].map((feature, index) => (

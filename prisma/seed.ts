@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Role, TransactionType, TransactionStatus } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -8,19 +8,19 @@ const userData = [
     email: "saint@example.com",
     password: "hashedpassword123", // In production, this should be properly hashed
     phone: "1112223333",
-    role: "USER",
+    role: Role.USER,
     transactions: {
       create: [
         {
           amount: 5000000.0,
-          type: "CREDIT",
-          status: "COMPLETED",
+          type: TransactionType.CREDIT,
+          status: TransactionStatus.COMPLETED,
           description: "Initial deposit",
         },
         { 
           amount: 300000.0, 
-          type: "DEBIT", 
-          status: "COMPLETED",
+          type: TransactionType.DEBIT, 
+          status: TransactionStatus.COMPLETED,
           description: "Porsche USA" 
         },
       ],
@@ -31,13 +31,13 @@ const userData = [
     email: "bob@example.com",
     password: "hashedpassword456", // In production, this should be properly hashed
     phone: "4445556666",
-    role: "USER",
+    role: Role.USER,
     transactions: {
       create: [
         { 
           amount: 300.0, 
-          type: "CREDIT", 
-          status: "COMPLETED",
+          type: TransactionType.CREDIT, 
+          status: TransactionStatus.COMPLETED,
           description: "Salary deposit" 
         },
       ],

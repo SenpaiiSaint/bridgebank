@@ -20,7 +20,7 @@ export default function USSD() {
   const [output, setOutput] = useState<string[]>([]);
   const [state, setState] = useState<USSDState>({
     menu: 'main',
-    balance: 1500,
+    balance: 10000000,
     lastTransaction: ''
   });
   const [networkSignal, setNetworkSignal] = useState<NetworkSignal>({
@@ -76,7 +76,7 @@ export default function USSD() {
         switch (cmd) {
           case '1':
             setState(prev => ({ ...prev, menu: 'balance' }));
-            return ['Your balance is: $' + state.balance.toFixed(2)];
+            return ['Your balance is: $' + state.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })];
           case '2':
             setState(prev => ({ ...prev, menu: 'send_money' }));
             return ['Enter recipient number:'];
@@ -87,7 +87,7 @@ export default function USSD() {
             setState(prev => ({ ...prev, menu: 'bills' }));
             return ['Select bill type:\n1. Electricity\n2. Water\n3. Internet'];
           case '0':
-            return ['Thank you for using UnBanked USSD'];
+            return ['Thank you for using FinLink USSD'];
           default:
             return ['Invalid input. Please try again.'];
         }
@@ -176,9 +176,9 @@ export default function USSD() {
             >
               <div>
                 <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
-                  USSD Simulation
+                  Universal Banking Access
                 </h1>
-                <p className="text-gray-600 mt-2">Experience our USSD banking service in a simulated environment</p>
+                <p className="text-gray-600 mt-2">Experience our innovative USSD banking platform in a simulated environment</p>
               </div>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
@@ -228,18 +228,18 @@ export default function USSD() {
                         exit={{ opacity: 0, y: -20 }}
                         className="text-gray-500"
                       >
-                        Welcome to UnBanked USSD Service
+                        Welcome to FinLink Universal Banking
                         <br />
                         <br />
-                        1. Check Balance
+                        1. Account Balance
                         <br />
-                        2. Send Money
+                        2. Fund Transfer
                         <br />
-                        3. Buy Airtime
+                        3. Airtime Purchase
                         <br />
-                        4. Pay Bills
+                        4. Bill Payments
                         <br />
-                        0. Exit
+                        0. End Session
                       </motion.div>
                     ) : (
                       output.map((line, index) => (
@@ -283,6 +283,21 @@ export default function USSD() {
                     className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
                   >
                     Send
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setOutput([]);
+                      setState({
+                        menu: 'main',
+                        balance: 10000000,
+                        lastTransaction: ''
+                      });
+                      setInput('');
+                    }}
+                    className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors"
+                  >
+                    Reset
                   </button>
                 </form>
 
@@ -328,26 +343,26 @@ export default function USSD() {
               className="grid grid-cols-1 md:grid-cols-2 gap-6"
             >
               <div className="bg-white rounded-2xl shadow-lg p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Available Commands</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Available Services</h3>
                 <ul className="space-y-2 text-gray-600">
-                  <li>• 1 - Check Balance</li>
-                  <li>• 2 - Send Money</li>
-                  <li>• 3 - Buy Airtime</li>
-                  <li>• 4 - Pay Bills</li>
-                  <li>• 0 - Back/Exit</li>
+                  <li>• 1 - Account Balance</li>
+                  <li>• 2 - Fund Transfer</li>
+                  <li>• 3 - Airtime Purchase</li>
+                  <li>• 4 - Bill Payments</li>
+                  <li>• 0 - End Session</li>
                 </ul>
               </div>
               <div className="bg-white rounded-2xl shadow-lg p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Demo Features</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Platform Features</h3>
                 <ul className="space-y-2 text-gray-600">
-                  <li>• Real-time balance updates</li>
-                  <li>• Transaction history</li>
-                  <li>• Multiple menu levels</li>
-                  <li>• Error handling</li>
-                  <li>• Auto-scrolling output</li>
-                  <li>• Network signal simulation</li>
-                  <li>• Animated transitions</li>
-                  <li>• Virtual keypad</li>
+                  <li>• Real-time account updates</li>
+                  <li>• Secure transaction processing</li>
+                  <li>• Multi-level menu navigation</li>
+                  <li>• Comprehensive error handling</li>
+                  <li>• Dynamic output display</li>
+                  <li>• Network status monitoring</li>
+                  <li>• Seamless transitions</li>
+                  <li>• Interactive keypad interface</li>
                 </ul>
               </div>
             </motion.div>
