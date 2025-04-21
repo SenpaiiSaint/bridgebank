@@ -10,12 +10,6 @@ export const dynamic = 'force-dynamic';
 
 const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
-  session: {
-    strategy: "jwt" as const,
-  },
-  pages: {
-    signIn: "/login",
-  },
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -74,6 +68,5 @@ const authOptions: NextAuthOptions = {
   },
 };
 
-const handler = NextAuth(authOptions);
-
-export { handler as GET, handler as POST }; 
+export const GET = NextAuth(authOptions);
+export const POST = NextAuth(authOptions); 
