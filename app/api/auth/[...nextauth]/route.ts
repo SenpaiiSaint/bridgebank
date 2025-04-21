@@ -3,11 +3,12 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import type { NextAuthOptions } from "next-auth";
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const authOptions = {
+const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt" as const,
