@@ -18,6 +18,7 @@ model User {
   transactions  Transaction[]
   accounts      Account[]
   sessions      Session[]
+  loans         Loan[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -68,6 +69,18 @@ model Transaction {
   createdAt   DateTime  @default(now())
 }
 
+model Loan {
+  id            String    @id @default(cuid())
+  amount        Float
+  term          Int
+  interestRate  Float
+  status        LoanStatus @default(PENDING)
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
 enum Role {
   USER
   ADMIN
@@ -82,4 +95,12 @@ enum TransactionStatus {
   PENDING
   COMPLETED
   FAILED
+}
+
+enum LoanStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  PAID
+  DEFAULTED
 }

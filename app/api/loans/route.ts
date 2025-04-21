@@ -13,18 +13,23 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const transactions = await prisma.transaction.findMany({
+    const loans = await prisma.loan.findMany({
       where: {
         userId: session.user.id,
       },
-      orderBy: {
-        createdAt: 'desc',
+      select: {
+        id: true,
+        amount: true,
+        status: true,
+        interestRate: true,
+        term: true,
+        createdAt: true,
       },
     });
 
-    return NextResponse.json(transactions);
+    return NextResponse.json(loans);
   } catch (error) {
-    console.error('Error fetching transactions:', error);
+    console.error('Error fetching loans:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -39,21 +44,18 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { amount, type, description } = await request.json();
+    const { amount, term, interestRate } = await request.json();
 
-    if (!amount || !type || !description) {
+    if (!amount || !term || !interestRate) {
       return NextResponse.json(
-        { error: 'Amount, type, and description are required' },
+        { error: 'Amount, term, and interest rate are required' },
         { status: 400 }
       );
     }
 
     const user = await prisma.user.findUnique({
       where: { id: session.user.id },
-      select: {
-        id: true,
-        balance: true,
-      },
+      select: { id: true, balance: true },
     });
 
     if (!user) {
@@ -63,38 +65,30 @@ export async function POST(request: Request) {
       );
     }
 
-    if (type === 'DEBIT' && user.balance < amount) {
-      return NextResponse.json(
-        { error: 'Insufficient balance' },
-        { status: 400 }
-      );
-    }
-
-    const transaction = await prisma.transaction.create({
+    const loan = await prisma.loan.create({
       data: {
         amount,
-        type,
-        description,
+        term,
+        interestRate,
         userId: session.user.id,
+        status: 'PENDING',
+      },
+      select: {
+        id: true,
+        amount: true,
+        status: true,
+        interestRate: true,
+        term: true,
+        createdAt: true,
       },
     });
 
-    // Update user balance
-    await prisma.user.update({
-      where: { id: session.user.id },
-      data: {
-        balance: {
-          [type === 'CREDIT' ? 'increment' : 'decrement']: amount,
-        },
-      },
-    });
-
-    return NextResponse.json(transaction);
+    return NextResponse.json(loan);
   } catch (error) {
-    console.error('Error creating transaction:', error);
+    console.error('Error creating loan:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
     );
   }
-} 
+}
