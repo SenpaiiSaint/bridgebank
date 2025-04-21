@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic';
 const authOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
-    strategy: "jwt",
+    strategy: "jwt" as const,
   },
   pages: {
     signIn: "/login",
