@@ -42,7 +42,7 @@ export default function PageNav() {
     <motion.nav
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200"
+      className="fixed top-0 left-0 right-0 z-40 bg-white/30 backdrop-blur-xl border-b border-white/30 shadow-lg"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -53,14 +53,14 @@ export default function PageNav() {
           >
             <Link href="/" className="flex items-center">
               <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
-                FinLink
+                BridgeBank
               </span>
             </Link>
           </motion.div>
           
           <div className="flex items-center relative py-2">
             <motion.div
-              className="absolute bg-blue-50 rounded-lg"
+              className="absolute bg-white/40 backdrop-blur-lg border border-white/30 shadow rounded-lg"
               initial={false}
               animate={{
                 width: indicatorStyles.width,

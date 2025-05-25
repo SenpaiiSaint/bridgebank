@@ -32,7 +32,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <div className="container mx-auto px-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
-                  <h3 className="text-xl font-semibold mb-4">FinLink</h3>
+                  <h3 className="text-xl font-semibold mb-4">BridgeBank</h3>
                   <p className="text-gray-400">Bridging financial gaps through technology and innovation.</p>
                 </div>
                 <div>
